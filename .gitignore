@@ -1,0 +1,26 @@
+# Temporary and binary files
+__pycache__
+*.py[cod]
+**/*.py[cod]
+*$py.class
+*/.ipynb_checkpoints/*
+**/.ipynb_checkpoints/**
+.ipynb_checkpoints/*
+.DS_Store
+
+# Package files
+*.egg
+*.eggs/
+*.egg-info
+
+# Build and docs folder/files
+build/*
+dist/*
+sdist/*
+
+# environment folder
+env/*
+runs/*
+models/*
+saved_models/*
+
