@@ -1,5 +1,5 @@
 # NLP with Transformers - Follow Along
-implementing the code presented in [*Natural Language Processign with Transformers*|https://learning.oreilly.com/library/view/natural-language-processing/9781098103231/] as a way to consolidate learnings.
+implementing the code presented in [*Natural Language Processign with Transformers*](https://learning.oreilly.com/library/view/natural-language-processing/9781098103231/) as a way to consolidate learnings.
 Refactored
 ## Motivation
 Consolidate learnings from the books.
