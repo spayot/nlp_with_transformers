@@ -2,8 +2,10 @@
 Setting up a Question Answering system using the haystack framework.
 
 ## Dataset: 
-* in the book: subjqa - elecrtronics (customer reviews)
-* here: subjqa - movies reviews
+* in the book: [subjqa](https://huggingface.co/datasets/subjqa) - elecrtronics (customer reviews)
+* here: subjqa - movie reviews   
+
+both of those have approximately 1,300 question-answer pairs for training and about 300 for testing.
 ## Motivation
 Allow to extract from previous reviews the most relevant answer to new free form text questions about a given item (here movie).
 
@@ -25,7 +27,8 @@ Haystack uses a Retriever-Reader pipeline.
 after setting up your environment, you can execute the notebook [here](notebooks/chp7_question_answering.ipynb)
 
 ## Refactoring
-* the code to convert training data into the SQUAD json format was refactored and extracted into 
+* the code to convert training data into the SQUAD json format was refactored and extracted into [squad_conversion.py](src/qa/squad_conversion.py)
+* label c
 ## More Resources
 * [subjqa dataset](https://huggingface.co/datasets/subjqa)
 * [haystack documentation](https://docs.haystack.deepset.ai/docs/installation)

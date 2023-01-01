@@ -14,4 +14,4 @@ Author: Sylvain Payot
 E-mail: sylvain.payot@gmail.com
 """
 
-from . import squad_conversion
+from . import labels, squad_conversion
