@@ -21,6 +21,6 @@ sdist/*
 # environment folder
 env/*
 runs/*
-models/*
-saved_models/*
+**/models/*
+**/data/*
 

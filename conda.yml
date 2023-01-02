@@ -1,0 +1,20 @@
+name: tfm2
+channels:
+  - pytorch-nightly
+  - conda-forge
+  - huggingface
+  - fastchan
+dependencies:
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - pytorch 
+  - torchvision
+  - transformers
+  - datasets
+  - nlpaug
+  - jupyter
+  - ipykernel
+  - codecov
+  - scikit-multilearn
+  - umap-learn
