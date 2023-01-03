@@ -1,0 +1,14 @@
+name: tfm0
+channels:
+  - huggingface
+  - pytorch
+  - conda-forge
+dependencies:
+  - pandas
+  - matplotlib
+  - pytorch
+  - transformers
+  - datasets
+  - ipykernel
+  - codecov
+  - pillow
