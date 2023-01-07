@@ -18,8 +18,9 @@ For each chapter, you can setup a dedicated environment by executing the `setup.
 ## About
 
 ## Progress
-- [ ] Chapter 1
-- [ ] Chapter 2
-- [x] Chapter 7
-- [ ] Chapter 8
-- [ ] Chapter 9
+- ![100%](https://progress-bar.dev/100) Chapter 0 - Datasets creation and processing
+- ![100%](https://progress-bar.dev/100) Chapter 2 - Text Classification
+- ![70%](https://progress-bar.dev/10) Chapter 4 - Multilingual NER
+- ![100%](https://progress-bar.dev/100) Chapter 7 - Question Answering
+- ![70%](https://progress-bar.dev/70) Chapter 8 - Model Compression
+- ![10%](https://progress-bar.dev/70) Chapter 9 - Few to No Labels
