@@ -8,7 +8,7 @@
 after setting up your environment, you can execute the notebook [here](notebooks/nlpt_02_text_classification.ipynb)
 
 ## Refactoring
-
+* mostly plotting functions (confusion matrix, hexmaps)
 
 ## References:
 * https://huggingface.co/docs/datasets/index
