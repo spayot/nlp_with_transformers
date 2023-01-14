@@ -1,0 +1,16 @@
+name: tfm2
+channels:
+  - huggingface
+  - pytorch
+  - conda-forge
+dependencies:
+  - pandas
+  - numpy
+  - matplotlib
+  - pytorch
+  - transformers
+  - datasets
+  - ipykernel
+  - codecov
+  - scikit-learn
+  - umap-learn

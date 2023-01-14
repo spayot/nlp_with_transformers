@@ -55,6 +55,9 @@ class PerfCheck:
     def _get_ram_mb(self) -> float:
         return psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024)
 
+    def to_dict(self, prefix: str) -> dict:
+        return {prefix + k: v for k, v in self.__dict__.items() if k != "status"}
+
 
 class TestProcedure:
     def __init__(self):
@@ -84,10 +87,7 @@ class TestProcedure:
         print(self._query_perf)
 
     def get_record(self):
-        preproc_record = self._perf_check_to_dict(self._preproc_perf, "preproc_")
-        query_record = self._perf_check_to_dict(self._query_perf, "query_")
+        preproc_record = self._preproc_perf.to_dict(prefix="preproc_")
+        query_record = self._query_perf.to_dict(prefix="query_")
         preproc_record.update(query_record)
         return preproc_record
-
-    def _perf_check_to_dict(self, pc: PerfCheck, prefix: str) -> dict:
-        return {prefix + k: v for k, v in pc.__dict__.items() if k != "status"}
