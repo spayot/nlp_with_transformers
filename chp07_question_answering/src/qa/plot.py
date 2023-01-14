@@ -1,7 +1,10 @@
 import datasets
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import transformers as tfm
+
+_READER_SCORE_KEYS = ["exact_match", "f1"]
 
 
 def plot_logits_as_barchart(
@@ -25,4 +28,26 @@ def plot_logits_as_barchart(
     ax2.bar(x=token_ids, height=e_scores, color=colors)
     ax2.set_ylabel("End Scores")
     plt.xticks(token_ids, tokens, rotation="vertical")
+    plt.show()
+
+
+def plot_retriever_eval(
+    results: dict[str, pd.DataFrame], metrics: str = "recall"
+) -> None:
+    fig, ax = plt.subplots()
+    for retriever_name, results_df in results.items():
+        results_df.plot(y=metrics, ax=ax, label=retriever_name)
+    plt.title("retriever Recall@k")
+    plt.xlabel("k")
+    plt.ylabel(metrics)
+    plt.show()
+
+
+def plot_reader_eval(reader_eval: dict[str, dict]) -> None:
+    _, ax = plt.subplots()
+    df = pd.DataFrame.from_dict(reader_eval).reindex(_READER_SCORE_KEYS)
+    df.plot(kind="bar", ylabel="Score", rot=0, ax=ax)
+    ax.set_xticklabels(["EM", "F1"])
+    ax.set_ylim([0, 1])
+    plt.legend(loc="upper left")
     plt.show()

@@ -15,4 +15,4 @@ Author: Sylvain Payot
 E-mail: sylvain.payot@gmail.com
 """
 
-from . import label, plot, squad_conversion
+from . import evaluate, label, plot, squad_conversion

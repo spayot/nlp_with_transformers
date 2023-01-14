@@ -3,7 +3,7 @@ import json
 import pandas as pd
 
 
-def convert_all_data_to_squad(
+def convert_all_data_to_squad_format(
     dfs: dict[str, pd.DataFrame], fpath_template: str
 ) -> None:
     for split, df in dfs.items():
