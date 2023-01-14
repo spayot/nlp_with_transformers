@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Name: 
-   nlp_with_transformers
+   qa
 
 Description:
    NLP with Transformers - Follow Along
+   Chapter 7 - Question Answering
 
 Example:
 
@@ -14,4 +15,4 @@ Author: Sylvain Payot
 E-mail: sylvain.payot@gmail.com
 """
 
-from . import labels, squad_conversion
+from . import label, plot, squad_conversion
