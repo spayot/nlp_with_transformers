@@ -1,4 +1,4 @@
-name: tfm2
+name: tfm4
 channels:
   - huggingface
   - pytorch
@@ -12,5 +12,4 @@ dependencies:
   - datasets
   - ipykernel
   - codecov
-  - scikit-learn
-  - umap-learn
+  - seqeval
