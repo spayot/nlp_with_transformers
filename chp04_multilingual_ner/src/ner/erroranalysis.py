@@ -11,7 +11,6 @@ class TokensLossDataFrameBuilder:
     def __init__(
         self,
         trainer: tfm.Trainer,
-        data_collator: tfm.DataCollatorForTokenClassification,
     ):
         """
         - calculate token-level loss on dataset
@@ -20,9 +19,6 @@ class TokensLossDataFrameBuilder:
         - analyze loss grouped by
         """
         self.trainer = trainer
-        self.data_collator = data_collator
-        self._tokens_df: pd.DataFrame = None
-
         self.id2label_with_ignore = trainer.model.config.id2label.copy()
         self.id2label_with_ignore[IGNORED_TAG_ID] = "IGN"
 
@@ -38,7 +34,7 @@ class TokensLossDataFrameBuilder:
 
         return dataset.map(
             calculate_loss_and_predictions_on_batch,
-            fn_kwargs={"trainer": self.trainer, "data_collator": self.data_collator},
+            fn_kwargs={"trainer": self.trainer},
             batched=True,
             batch_size=32,
         )
@@ -104,15 +100,14 @@ class TokensLossDataFrameBuilder:
 def calculate_loss_and_predictions_on_batch(
     batch: dict[str, torch.tensor],
     trainer: tfm.Trainer,
-    data_collator: tfm.DataCollatorForTokenClassification,
 ) -> dict[str, np.ndarray]:
     "computes predicted labels and loss between actual labels and predicted, given a batch of encoded examples."
 
     # turn batch into a list of dictionaries for individual examples
     features = [dict(zip(batch, t)) for t in zip(*batch.values())]
 
-    # does padding on inputs AND labels
-    batch = data_collator(features)
+    # adds padding on inputs AND labels
+    batch = trainer.data_collator(features)
 
     return calculate_loss(batch, trainer)
 

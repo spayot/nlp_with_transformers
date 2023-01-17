@@ -1,1 +1,1 @@
-from . import erroranalysis, evaluate, inspect, plot, preproc
+from . import erroranalysis, inspect, metrics, plot, preproc
