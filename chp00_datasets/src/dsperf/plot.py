@@ -8,7 +8,7 @@ def filter_dataframe_when_index_contains(
     return df.loc[[idx for idx in df.index if index_contains in idx]]
 
 
-def plot_test_type(df: pd.DataFrame, test_type, ax):
+def plot_test_type(df: pd.DataFrame, test_type: str, ax):
     df_to_plot = filter_dataframe_when_index_contains(df, test_type).T
     df_to_plot.plot.barh(ax=ax, title=test_type, stacked=True)
     plt.xticks(rotation=0)
