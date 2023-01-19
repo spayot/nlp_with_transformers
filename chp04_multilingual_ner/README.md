@@ -34,6 +34,6 @@ after setting up your environment, you can execute the notebook [here](notebooks
 * Pre-processing: 
     * `preproc.py` contains functions to tokenize input sentences and align labels (labels are provided at the word level, not token level in that dataset)
 * Metrics: 
-    ** created `SeqevalConverter` class with a `compute_metrics` method to evaluate sequential results from an f1 perspective.
+    * created `SeqevalConverter` class with a `compute_metrics` method to evaluate sequential results from an f1 perspective.
 ## References:
 * https://huggingface.co/docs/datasets/index

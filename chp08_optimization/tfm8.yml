@@ -1,0 +1,21 @@
+name: tfm8
+channels:
+  - huggingface
+  - pytorch
+  - conda-forge
+dependencies:
+  - pandas
+  - numpy
+  - matplotlib
+  - pytorch
+  - transformers
+  - datasets
+  - ipykernel
+  - codecov
+  - optuna
+  - onnx
+  - pip
+  - pip: 
+    - onnxruntime
+    - secrets
+

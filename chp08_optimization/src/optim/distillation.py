@@ -30,8 +30,8 @@ class DistillationTrainer(Trainer):
 
         # compute logits from teacher
         with torch.no_grad():
-            outputs_tea = self.teacher_model(**inputs)
-            logits_tea = outputs_tea.logits
+            outputs_teacher = self.teacher_model(**inputs)
+            logits_teacher = outputs_teacher.logits
 
         # get cross entropy loss from student
         ce_loss = outputs_stu.loss
@@ -40,7 +40,7 @@ class DistillationTrainer(Trainer):
         kd_loss_fct = torch.nn.KLDivLoss(reduction="batchmean")
         kd_loss = self.args.temperature**2 * kd_loss_fct(
             torch.nn.functional.log_softmax(logits_stu, dim=-1),
-            torch.nn.functional.softmax(logits_tea, dim=-1),
+            torch.nn.functional.softmax(logits_teacher, dim=-1),
         )
 
         # return weighted student loss
