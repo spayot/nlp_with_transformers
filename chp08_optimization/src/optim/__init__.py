@@ -1,1 +1,1 @@
-from . import distillation, onnx, perf, plot
+from . import distillation, onnx, perf, plot, quantize

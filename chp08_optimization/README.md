@@ -32,5 +32,7 @@ The combination of Knowledge Distillation + Quantization + ONNX Runtime allows t
 * plotting functions are refactored and moved to source code
 * ONNX Pipeline: moved to source code
 * custom `DistillationTrainer` is moved to source code
+* ONNX conversion + quantization turned into a pipeline in [`quantize.py`](src/optim/quantize.py)
+
 ## References:
 * https://huggingface.co/docs/datasets/index
