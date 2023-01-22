@@ -4,11 +4,11 @@ import pickle
 from pathlib import Path
 from time import perf_counter
 
+import evaluate
 import numpy as np
 import torch
-from datasets import load_metric
 
-accuracy_score = load_metric("accuracy")
+accuracy_score = evaluate.load("accuracy")
 
 QUERY = "i would like to make a trip from Paris to Roma"
 

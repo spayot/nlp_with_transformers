@@ -10,6 +10,7 @@ dependencies:
   - pytorch
   - transformers
   - datasets
+  - evaluate
   - ipykernel
   - codecov
   - optuna

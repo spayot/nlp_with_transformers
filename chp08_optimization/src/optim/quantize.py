@@ -5,8 +5,6 @@ import onnxruntime.quantization as onnx_quant
 import transformers as tfm
 from psutil import cpu_count
 
-from . import onnx
-
 
 def convert_to_ort_and_quantize(
     model_input_path: str, model_output_dir: str, tokenizer: tfm.AutoTokenizer

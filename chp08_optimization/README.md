@@ -1,7 +1,7 @@
 # Chapter 8: Intent Classification - Model Compression
 
 ## How to Setup Environment
-`sh ./setup.sh`
+`make setup`
 * sets up a conda environment with necessary dependencies
 * activate that environment
 * pip installs the local package (`optim`) in editable mode
