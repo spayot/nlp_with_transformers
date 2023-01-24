@@ -1,23 +1,27 @@
 import matplotlib.pyplot as plt
 
+from .eval import SlicedTrainingEvaluator
 
-def plot_metrics(
-    f1_scores: dict[str, dict], sample_sizes: list[int], current_model: str
-) -> None:
+
+def plot_metrics(evaluator: SlicedTrainingEvaluator, current_model: str) -> None:
     """plot f1 scores for each model, depending on # of training samples"""
+    sample_sizes = [len(slice) for slice in evaluator.train_slices]
     fig, axs = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
 
-    for run in f1_scores["micro"]:
+    for run in evaluator.f1_scores["micro"]:
         if run == current_model:
-            for ax, score_type in zip(axs, f1_scores):
-                ax.plot(
-                    sample_sizes, f1_scores[score_type][run], label=run, linewidth=2
-                )
-        else:
-            for ax, score_type in zip(axs, f1_scores):
+            for ax, score_type in zip(axs, evaluator.f1_scores):
                 ax.plot(
                     sample_sizes,
-                    f1_scores[score_type][run],
+                    evaluator.f1_scores[score_type][run],
+                    label=run,
+                    linewidth=2,
+                )
+        else:
+            for ax, score_type in zip(axs, evaluator.f1_scores):
+                ax.plot(
+                    sample_sizes,
+                    evaluator.f1_scores[score_type][run],
                     label=run,
                     linestyle="dashed",
                 )

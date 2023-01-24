@@ -1,0 +1,21 @@
+name: tfm9
+channels:
+  - huggingface
+  - pytorch
+  - conda-forge
+dependencies:
+  - pandas
+  - numpy
+  - scipy
+  - matplotlib
+  - pytorch
+  - transformers
+  - datasets
+  - evaluate
+  - ipykernel
+  - codecov
+  - scikit-learn
+  - scikit-multilearn 
+  - nlpaug
+  - pip
+
