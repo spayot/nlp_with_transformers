@@ -36,17 +36,17 @@ class SlicedTrainingEvaluator:
 
             # generate preds and evaluate
             y_pred_test = pipe.predict(self.ds["test"]["text"])
-            clf_report = classification_report(
-                y_test,
-                y_pred_test,
-                target_names=self.mlb.classes_,
-                zero_division=0,
-                output_dict=True,
-            )
 
-            self.f1_scores["macro"][strategy].append(
-                clf_report["macro avg"]["f1-score"]
-            )
-            self.f1_scores["micro"][strategy].append(
-                clf_report["micro avg"]["f1-score"]
-            )
+            self.add_f1_scores(y_test, y_pred_test, strategy)
+
+    def add_f1_scores(self, y_test: np.ndarray, y_pred: np.ndarray, strategy: str):
+        clf_report = classification_report(
+            y_test,
+            y_pred,
+            target_names=self.mlb.classes_,
+            zero_division=0,
+            output_dict=True,
+        )
+
+        self.f1_scores["macro"][strategy].append(clf_report["macro avg"]["f1-score"])
+        self.f1_scores["micro"][strategy].append(clf_report["micro avg"]["f1-score"])

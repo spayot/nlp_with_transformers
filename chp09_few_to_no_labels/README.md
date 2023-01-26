@@ -2,18 +2,19 @@
 Building a GitHub Issues Tagger
 
 ## How to Setup Environment
-`make setup`
+`make setup`  
 `conda activate tfm9`
+the above:  
 * sets up a conda environment with necessary dependencies
-* activate that environment
+* activates that environment
 * pip installs the local package (`fewlabels`) in editable mode
 
 ## How to use
 After setting up your environment, you can execute the notebook [here](notebooks/chp)
 
 ## Dataset
-* [`transformers github issues tags`]("https://git.io/nlp-with-transformers")
-* 440 labeled issues + 9303 unlabeled issues
+* [github issues tags for nlp with transformers]("https://git.io/nlp-with-transformers")
+* 440 labeled issues + 9,303 unlabeled issues
 
 
 ## Main Topics Explored in that Chapter
@@ -30,8 +31,8 @@ After setting up your environment, you can execute the notebook [here](notebooks
 
 
 ## Refactored
-* training dataset slicing is refactored and moved to `preproc.py`
-* 
+* Training dataset slicing is refactored and extracted into `preproc.py`
+* Evaluation Pipeline to get f1 macro
 
 ## References:
 * https://huggingface.co/docs/datasets/index
