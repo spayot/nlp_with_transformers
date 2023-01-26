@@ -7,7 +7,7 @@
 * pip installs the local package (`optim`) in editable mode
 
 ## How to use
-After setting up your environment, you can execute the notebook [here](notebooks/chp)
+After setting up your environment, you can execute the notebook [here](notebooks/chp08_prod_optimization.ipynb)
 
 ## Dataset
 * [`CLINC150`](https://huggingface.co/datasets/clinc_oos/viewer/plus/train)

@@ -28,11 +28,13 @@ After setting up your environment, you can execute the notebook [here](notebooks
 * Fine-Tuning a Vanilla Transformer
 * Domain Adaptation: Fine-Tuning language model on unlabeled data before training model on labeled data.
 
+![](images/)
 
 
 ## Refactored
 * Training dataset slicing is refactored and extracted into `preproc.py`
-* Evaluation Pipeline to get f1 macro
+* Evaluation Pipeline to get f1 micro/macro
+* functions to explore best label selection strategy based on zero shot classification scores (threshold vs top-k)
 
 ## References:
-* https://huggingface.co/docs/datasets/index
+* https://huggingface.co/docs/
