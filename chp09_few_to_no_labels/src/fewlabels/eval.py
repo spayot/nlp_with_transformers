@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Callable
 
 import datasets
 import numpy as np
@@ -25,9 +26,16 @@ class SlicedTrainingEvaluator:
         self,
         pipe: Pipeline,
         strategy: str,
+        augment_fcn: Callable = None,
     ) -> None:
         for train_slice in self.train_slices:
             ds_train_sample = self.ds["train"].select(train_slice)
+            if augment_fcn:
+                ds_train_sample = ds_train_sample.map(
+                    augment_fcn,
+                    batched=True,
+                    remove_columns=ds_train_sample.column_names,
+                ).shuffle()
             y_train = np.array(ds_train_sample["label_ids"])
             y_test = np.array(self.ds["test"]["label_ids"])
 

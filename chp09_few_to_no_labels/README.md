@@ -23,6 +23,7 @@ After setting up your environment, you can execute the notebook [here](notebooks
 * zero-shot classfication: recasting problem as a text entailment problem. 
     * top k vs threshold approach
 * Text data augmentation (`nlpaug` library) 
+    * token perturbation / back-translation
 * Using embeddings as a lookup table (FAISS)
     * how many neighbors? what threshold?
 * Fine-Tuning a Vanilla Transformer
@@ -34,7 +35,8 @@ After setting up your environment, you can execute the notebook [here](notebooks
 ## Refactored
 * Training dataset slicing is refactored and extracted into `preproc.py`
 * Evaluation Pipeline to get f1 micro/macro
-* functions to explore best label selection strategy based on zero shot classification scores (threshold vs top-k)
+* Cleaner functions to explore best label selection strategy based on zero shot classification scores (threshold vs top-k)
+* Augmentation helper functions are refactored and moved to the `augment.py` module.
 
 ## References:
 * https://huggingface.co/docs/
