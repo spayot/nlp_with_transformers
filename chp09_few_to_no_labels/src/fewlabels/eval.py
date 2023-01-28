@@ -1,5 +1,4 @@
 from collections import defaultdict
-from typing import Callable
 
 import datasets
 import numpy as np
@@ -8,6 +7,8 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MultiLabelBinarizer
+
+from .augment import AugmentBatchFcn
 
 
 class SlicedTrainingEvaluator:
@@ -26,26 +27,52 @@ class SlicedTrainingEvaluator:
         self,
         pipe: Pipeline,
         strategy: str,
-        augment_fcn: Callable = None,
+        augment_fcn: AugmentBatchFcn = None,
     ) -> None:
+
         for train_slice in self.train_slices:
-            ds_train_sample = self.ds["train"].select(train_slice)
-            if augment_fcn:
-                ds_train_sample = ds_train_sample.map(
-                    augment_fcn,
-                    batched=True,
-                    remove_columns=ds_train_sample.column_names,
-                ).shuffle()
-            y_train = np.array(ds_train_sample["label_ids"])
-            y_test = np.array(self.ds["test"]["label_ids"])
+            self._evaluate_pipe_on_single_slice(
+                pipe,
+                strategy,
+                train_slice,
+                augment_fcn,
+            )
 
-            # fit pipeline
-            _ = pipe.fit(ds_train_sample["text"], y_train)
+    def _evaluate_pipe_on_single_slice(
+        self,
+        pipe: Pipeline,
+        strategy: str,
+        train_slice: list[int],
+        augment_fcn: AugmentBatchFcn = None,
+    ) -> None:
 
-            # generate preds and evaluate
-            y_pred_test = pipe.predict(self.ds["test"]["text"])
+        ds_train_sample = self._generate_training_dataset(
+            train_slice,
+            augment_fcn,
+        )
 
-            self.add_f1_scores(y_test, y_pred_test, strategy)
+        y_train = np.array(ds_train_sample["label_ids"])
+        y_test = np.array(self.ds["test"]["label_ids"])
+
+        # fit pipeline
+        _ = pipe.fit(ds_train_sample["text"], y_train)
+
+        # generate preds and evaluate
+        y_pred_test = pipe.predict(self.ds["test"]["text"])
+
+        self.add_f1_scores(y_test, y_pred_test, strategy)
+
+    def _generate_training_dataset(
+        self, train_slice: list[int], augment_fcn: AugmentBatchFcn
+    ) -> datasets.Dataset:
+        ds_train_sample = self.ds["train"].select(train_slice)
+        if augment_fcn:
+            ds_train_sample = ds_train_sample.map(
+                augment_fcn,
+                batched=True,
+                remove_columns=ds_train_sample.column_names,
+            ).shuffle()
+        return ds_train_sample
 
     def add_f1_scores(self, y_test: np.ndarray, y_pred: np.ndarray, strategy: str):
         clf_report = classification_report(

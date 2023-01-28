@@ -36,7 +36,7 @@ After setting up your environment, you can execute the notebook [here](notebooks
 * Training dataset slicing is refactored and extracted into `preproc.py`
 * Evaluation Pipeline to get f1 micro/macro
 * Cleaner functions to explore best label selection strategy based on zero shot classification scores (threshold vs top-k)
-* Augmentation helper functions are refactored and moved to the `augment.py` module.
+* Augmentation helper functions are refactored and moved to the `augment.py` module. defined several [callback protocols](https://mypy.readthedocs.io/en/stable/protocols.html) (interfaces) to decouple augmentation implementation from evaluation and batch level augmentation code.
 
 ## References:
 * https://huggingface.co/docs/

@@ -1,7 +1,11 @@
+from typing import Any
+
 import datasets
 import numpy as np
 from sklearn.preprocessing import MultiLabelBinarizer
 from skmultilearn.model_selection import iterative_stratification
+
+Batch = dict[str, list[Any]]
 
 
 def create_dataset_slices(
