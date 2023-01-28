@@ -37,6 +37,7 @@ After setting up your environment, you can execute the notebook [here](notebooks
 * Evaluation Pipeline to get f1 micro/macro
 * Cleaner functions to explore best label selection strategy based on zero shot classification scores (threshold vs top-k)
 * Augmentation helper functions are refactored and moved to the `augment.py` module. defined several [callback protocols](https://mypy.readthedocs.io/en/stable/protocols.html) (interfaces) to decouple augmentation implementation from evaluation and batch level augmentation code.
+* mean_pooling converted from a function to a torch.nn.Module (`TransformerWithMeanPooling`) and moved to `text_embeddings.py`
 
 ## References:
 * https://huggingface.co/docs/
