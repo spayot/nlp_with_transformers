@@ -1,5 +1,11 @@
+from typing import Any
+
+import datasets
+import numpy as np
 import torch
 import transformers as tfm
+
+from . import eval
 
 
 class TransformerWithMeanPooling(torch.nn.Module):
@@ -29,3 +35,47 @@ class TransformerWithMeanPooling(torch.nn.Module):
         self, attention_mask: torch.Tensor, dim: int
     ) -> torch.Tensor:
         return attention_mask.unsqueeze(-1).expand(dim)
+
+
+class KNNTagger:
+    def __init__(self, train_ds: datasets.Dataset):
+        self.train_ds = train_ds
+
+    def get_neighbor_tags(self, example, k: int):
+        neighbors = self.train_ds.get_nearest_examples(
+            "embeddings", query=np.array(example["embeddings"]), k=k
+        )
+        return neighbors.examples["label_ids"]
+
+    @staticmethod
+    def select_tags_from_neighbor_tags(
+        neighbor_labels: list[list[int]], threshold: int
+    ) -> list[int]:
+        return list((np.array(neighbor_labels).sum(axis=0) >= threshold) * 1)
+
+    def tag_from_neighbors(self, example: dict[str, list[Any]], k: int, threshold: int):
+        assert (
+            threshold <= k
+        ), f"threshold {threshold} should be lower or equal to k ({k})"
+
+        neighbor_labels = self.get_neighbor_tags(example, k)
+        return {
+            "predicted_labels": self.select_tags_from_neighbor_tags(
+                neighbor_labels, threshold
+            )
+        }
+    
+    def score(
+        self, 
+        valid_ds: datasets.Dataset, 
+        k: int, 
+        threshold: int,
+    ) -> dict[str, float]:
+        
+        tagged_ds = valid_ds.map(
+            self.tag_from_neighbors, 
+            fn_kwargs={"k": k, "threshold": threshold},
+            )
+
+        return eval.get_f1_scores(tagged_ds["predicted_labels"], tagged_ds["label_ids"])
+    

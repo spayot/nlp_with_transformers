@@ -75,13 +75,20 @@ class SlicedTrainingEvaluator:
         return ds_train_sample
 
     def add_f1_scores(self, y_test: np.ndarray, y_pred: np.ndarray, strategy: str):
-        clf_report = classification_report(
-            y_test,
-            y_pred,
-            target_names=self.mlb.classes_,
-            zero_division=0,
-            output_dict=True,
-        )
+        scores = get_f1_scores(y_test, y_pred, self.mlb.classes_)
 
-        self.f1_scores["macro"][strategy].append(clf_report["macro avg"]["f1-score"])
-        self.f1_scores["micro"][strategy].append(clf_report["micro avg"]["f1-score"])
+        for metric in scores.keys():
+            self.f1_scores[metric][strategy].append(scores[metric])
+
+
+def get_f1_scores(
+    y_true: np.ndarray, y_pred: np.ndarray, target_names: list[str] = None
+) -> dict[str, float]:
+    clf_report = classification_report(
+        y_true, y_pred, target_names=target_names, zero_division=0, output_dict=True
+    )
+
+    return {
+        "micro": clf_report["micro avg"]["f1-score"],
+        "macro": clf_report["macro avg"]["f1-score"],
+    }

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 from .eval import SlicedTrainingEvaluator
 
@@ -38,3 +39,26 @@ def plot_metrics(evaluator: SlicedTrainingEvaluator, current_model: str) -> None
         ax.set_xticklabels(sample_sizes)
     plt.tight_layout()
     plt.show()
+
+
+def plot_gridsearch(micro_scores: np.ndarray, macro_scores: np.ndarray):
+    """used for hyperparameters gridsearch for embedding-based lookup tables.
+    generates 2-D visualizations for micro and macro scores based on choice for
+    - k: number of neighbors
+    - threshold: minimum number of neighbors having a label for that label to be attributed to
+        query example"""
+    fig, ax = plt.subplots(1, 2, sharey=True)
+    ax.flatten()
+    plot_single_gridsearch(micro_scores, ax[0], "micro scores")
+    plot_single_gridsearch(macro_scores, ax[1], "macro scores")
+
+    return fig
+
+
+def plot_single_gridsearch(scores: np.ndarray, ax, title: str):
+    ax.imshow(scores)
+    ax.set_xlabel("threshold")
+    ax.set_ylabel("k")
+    ax.set_title(title)
+    ax.set_xlim([0.5, len(scores) - 1.5])
+    ax.set_ylim([len(scores) - 1.5, 0.5])
