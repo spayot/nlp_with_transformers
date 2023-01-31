@@ -10,6 +10,8 @@ from . import eval
 
 class TransformerWithMeanPooling(torch.nn.Module):
     def __init__(self, model: tfm.AutoModel):
+        """turns full text into a single embedding, using mean pooling
+        on the last hidden state layer."""
         super().__init__()
         self.model = model
 
@@ -38,44 +40,52 @@ class TransformerWithMeanPooling(torch.nn.Module):
 
 
 class KNNTagger:
-    def __init__(self, train_ds: datasets.Dataset):
-        self.train_ds = train_ds
-
-    def get_neighbor_tags(self, example, k: int):
-        neighbors = self.train_ds.get_nearest_examples(
-            "embeddings", query=np.array(example["embeddings"]), k=k
-        )
-        return neighbors.examples["label_ids"]
-
-    @staticmethod
-    def select_tags_from_neighbor_tags(
-        neighbor_labels: list[list[int]], threshold: int
-    ) -> list[int]:
-        return list((np.array(neighbor_labels).sum(axis=0) >= threshold) * 1)
-
-    def tag_from_neighbors(self, example: dict[str, list[Any]], k: int, threshold: int):
+    def __init__(
+        self,
+        k: int,
+        threshold: int,
+    ):
+        self.train_ds: datasets.Dataset = None
+        self.k = k
+        self.threshold = threshold
         assert (
             threshold <= k
         ), f"threshold {threshold} should be lower or equal to k ({k})"
 
-        neighbor_labels = self.get_neighbor_tags(example, k)
-        return {
-            "predicted_labels": self.select_tags_from_neighbor_tags(
-                neighbor_labels, threshold
-            )
-        }
-    
-    def score(
-        self, 
-        valid_ds: datasets.Dataset, 
-        k: int, 
-        threshold: int,
-    ) -> dict[str, float]:
-        
-        tagged_ds = valid_ds.map(
-            self.tag_from_neighbors, 
-            fn_kwargs={"k": k, "threshold": threshold},
-            )
+    def fit(self, train_ds: datasets.Dataset) -> None:
+        self.train_ds = train_ds
 
+    def predict(self, ds: datasets.Dataset) -> datasets.Dataset:
+        assert (
+            self.train_ds is not None
+        ), "you need to fit the KNNTagger on a training dataset first."
+        return ds.map(self.predict_single_example)
+
+    def _extract_tags_from_nearest_neighbors(self, example):
+        neighbors = self.train_ds.get_nearest_examples(
+            "embeddings",
+            query=np.array(example["embeddings"], dtype=np.float32),
+            k=int(self.k),
+        )
+        return neighbors.examples["label_ids"]
+
+    def _select_tags_from_neighbor_tags(
+        self, neighbor_labels: list[list[int]]
+    ) -> list[int]:
+        return list((np.array(neighbor_labels).sum(axis=0) >= self.threshold) * 1)
+
+    def predict_single_example(
+        self, example: dict[str, list[Any]]
+    ) -> dict[str, list[int]]:
+        neighbor_labels = self._extract_tags_from_nearest_neighbors(example)
+        return {
+            "predicted_labels": self._select_tags_from_neighbor_tags(neighbor_labels)
+        }
+
+    def score(
+        self,
+        ds: datasets.Dataset,
+    ) -> dict[str, float]:
+
+        tagged_ds = self.predict(ds)
         return eval.get_f1_scores(tagged_ds["predicted_labels"], tagged_ds["label_ids"])
-    

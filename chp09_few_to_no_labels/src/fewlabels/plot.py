@@ -40,6 +40,8 @@ def plot_metrics(evaluator: SlicedTrainingEvaluator, current_model: str) -> None
     plt.tight_layout()
     plt.show()
 
+    return fig
+
 
 def plot_gridsearch(micro_scores: np.ndarray, macro_scores: np.ndarray):
     """used for hyperparameters gridsearch for embedding-based lookup tables.
@@ -51,6 +53,8 @@ def plot_gridsearch(micro_scores: np.ndarray, macro_scores: np.ndarray):
     ax.flatten()
     plot_single_gridsearch(micro_scores, ax[0], "micro scores")
     plot_single_gridsearch(macro_scores, ax[1], "macro scores")
+
+    plt.tight_layout()
 
     return fig
 

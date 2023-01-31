@@ -32,7 +32,7 @@ After setting up your environment, you can execute the notebook [here](notebooks
 * Fine-Tuning a Vanilla Transformer
 * Domain Adaptation: Fine-Tuning language model on unlabeled data before training model on labeled data.
 
-![](images/)
+![](images/evaluation.png)
 
 
 ## Refactored
