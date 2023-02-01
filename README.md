@@ -23,4 +23,4 @@ For each chapter, you can setup a dedicated environment by executing the `setup.
 - ![100%](https://progress-bar.dev/100) Chapter 4 - Multilingual NER
 - ![100%](https://progress-bar.dev/100) Chapter 7 - Question Answering
 - ![100%](https://progress-bar.dev/100) Chapter 8 - Model Compression
-- ![60%](https://progress-bar.dev/60) Chapter 9 - Few to No Labels
+- ![80%](https://progress-bar.dev/80) Chapter 9 - Few to No Labels
