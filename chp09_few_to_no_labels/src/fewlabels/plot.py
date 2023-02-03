@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 from .eval import SlicedTrainingEvaluator
 
@@ -66,3 +67,18 @@ def plot_single_gridsearch(scores: np.ndarray, ax, title: str):
     ax.set_title(title)
     ax.set_xlim([0.5, len(scores) - 1.5])
     ax.set_ylim([len(scores) - 1.5, 0.5])
+
+
+def plot_trainer_loss(log_history):
+    df_log = pd.DataFrame(log_history)
+    field_map = {
+        "eval_loss": "Validation",
+        "loss": "Train",
+    }
+    for loss_type, label in field_map.items():
+        (df_log.dropna(subset=loss_type).reset_index()[loss_type].plot(label=label))
+
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.legend(loc="upper right")
+    plt.show()
