@@ -2,7 +2,7 @@
 
 ## Motivation
 * Consolidate learnings from reading the book [*Natural Language Processign with Transformers*](https://learning.oreilly.com/library/view/natural-language-processing/9781098103231/), by reimplementing its most interesting chapters.
-* Apply some of the refactoring techniques and software design principles learned from [#ArjanCodes](https://www.arjancodes.com/) to "create software that is easy to change and scale".
+* Apply some of the refactoring techniques and software design principles learned from [#ArjanCodes](https://www.arjancodes.com/) to strive for maintainability, readability and scalability.
 
 ## Method and Results
 Approach:
