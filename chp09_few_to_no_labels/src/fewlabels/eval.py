@@ -2,8 +2,6 @@ from collections import defaultdict
 
 import datasets
 import numpy as np
-import transformers as tfm
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MultiLabelBinarizer
